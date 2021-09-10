@@ -1,5 +1,6 @@
 import * as esbuild from 'esbuild-wasm';
 import axios from 'axios';
+<<<<<<< HEAD
 import localForage from 'localforage';
 
 const fileCache = localForage.createInstance({
@@ -7,6 +8,8 @@ const fileCache = localForage.createInstance({
 });
 
 
+=======
+>>>>>>> 5b629efa192e63f2ba4c9cb3b9eb38f1dc4043a0
 export const unpkgPathPlugin = () => {
   return {
     name: 'unpkg-path-plugin',
@@ -36,11 +39,17 @@ export const unpkgPathPlugin = () => {
           return {
             loader: 'jsx',
             contents: `
+<<<<<<< HEAD
               import React, { useState }  from 'react-select';
+=======
+              import React, { useState } from 'react';
+              const axios = require ('axios');
+>>>>>>> 5b629efa192e63f2ba4c9cb3b9eb38f1dc4043a0
               console.log(React, useState);
             `,
           };
         } 
+<<<<<<< HEAD
         // Check to see if we have already fetched this file
         // and if it is in the cache
         const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(args.path);
@@ -59,6 +68,14 @@ export const unpkgPathPlugin = () => {
         await fileCache.setItem(args.path, result);
 
         return result;
+=======
+        const { data, request } = await axios.get(args.path);
+        return {
+          loader: 'jsx',
+          contents: data,
+          resolveDir: new URL('./', request.responseURL).pathname
+        }
+>>>>>>> 5b629efa192e63f2ba4c9cb3b9eb38f1dc4043a0
       });
     },
   };
