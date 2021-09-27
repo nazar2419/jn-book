@@ -40,15 +40,19 @@ const CodeEditor: React.FC<CodeEditorProps> = ({onChange, initialValue }) => {
     // get current value from editor
     const unformatted = editorRef.current.getModel().getValue();
     // format that value
-    const formatted = prettier.format(unformatted, {
-      parser: 'babel',
-      plugins: [parser],
-      useTabs: false,
-      semi: true,
-      singleQuote: true,
-    }).replace(/\n$/, '');
-    // set the formatted value back in the editor
-    editorRef.current.setValue(formatted);
+    try {
+      const formatted = prettier.format(unformatted, {
+        parser: 'babel',
+        plugins: [parser],
+        useTabs: false,
+        semi: true,
+        singleQuote: true,
+      }).replace(/\n$/, '');
+      // set the formatted value back in the editor
+      editorRef.current.setValue(formatted);
+    } catch (error: any) {
+        console.error(error.message);
+    }
   };
 
 
@@ -65,7 +69,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({onChange, initialValue }) => {
         value={initialValue}
         theme="dark"
         language="javascript"
-        height="500px"
+        height="100%"
         options={{
           wordWrap: 'on',
           minimap: { enabled: false },
@@ -76,7 +80,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({onChange, initialValue }) => {
           scrollBeyondLastLine: true,
           automaticLayout: true,
         }}
-      />;
+      />
   </div>
   )
 };
