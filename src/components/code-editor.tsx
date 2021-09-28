@@ -51,7 +51,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({onChange, initialValue }) => {
       // set the formatted value back in the editor
       editorRef.current.setValue(formatted);
     } catch (error: any) {
-        console.error(error.message);
+        return error.message;
     }
   };
 
